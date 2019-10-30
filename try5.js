@@ -83,7 +83,7 @@ var svgs = [
   'download'
 ];
 
-
+console.log(car)
 
 
  var vertexSets = [];
@@ -114,6 +114,7 @@ var wheelBaseLeft = Bodies.circle(wheelXOffset, wheelYOffset-100, wheelRadius,{
   collisionFilter: {group: -1},
   density: 0.001,
   friction: 0.001
+ 
 
 });
 
@@ -165,11 +166,11 @@ var wheelRight = Matter.Body.create({ parts: wheelBodyRight}, {collisionFilter: 
 var constraint = Constraint.create({
   bodyA: wheelRight,
   bodyB: wheelLeft,  
-  stiffness: 0.003,
+  stiffness: 0.3,
   friction: legFriction,
   restitution: legRestituion,
-  damping: 0.05,
-  gravity: .1,
+  damping: 0.5,
+  gravity: .0001,
   collisionFilter: {group: -1}
 });
 
@@ -231,12 +232,15 @@ setInterval(timeOutLeft, 8);
 
 //order of things would like to see
 //add to the environment such that you have to use the legs
-//make slider for extension and scaling
+//make slider for extension 
 //redesign the robot with popup box before starting course and during course
 //make wheelbase, wheelraidus, number of legs, leg lengths (but they dont get to configure just)
 //configure wheelraidus which configures both
-//pick reseaonable values current values and no more than double that in raidus and half 
-//that in radius
+
+//COMPLETE pick reseaonable values current values and no more than double that in raidus and half 
+//COMPLETE that in radius
+//COMPLETE make slider for scaling
+
 //select course option
 //when you go to website it lets you drop into preconfigured robot
 //then you go to play game in lets you get more in depth
@@ -244,6 +248,11 @@ setInterval(timeOutLeft, 8);
 //amount of energy
 //CSS grid learning for layering UI interface scrimba css grid
 //after just personalize with colors but come back too
+
+//issue of if you scale wheels all the way up and then extend legs...then scale wheels
+//all the way down while the legs scale down as well there is still a big gap between
+//the distane the legs are supposed to be from the circle as extended and what is
+//actual possible due to this glitch
 
 
 
@@ -267,86 +276,106 @@ window.addEventListener('keydown', function (e) {
             
     
         }});
-var scaleValueCheck = 0;
-var addCheck = "k"
-//still is not scaling right
-//click to retract wheels
 var scale = document.getElementById("scaleWheels");
+console.log(car)
 
-scale.addEventListener("mouseup", function(){
-  var scaleValue = document.getElementById("scaleWheels").value;
-  console.log(scaleValue, "this is scalevalue");
-  console.log(scaleValueCheck, " this is scalevaluecheck")
-  if(scaleValue < scaleValueCheck && car.bodies[0].parts[1].circleRadius >= 16){
-    console.log("decrease");
-    scaleSize = 1+((scaleValue *-2/wheelRadius));
-    console.log(scaleSize)
-    console.log(scaleValue, "this is scalevalue");
-    console.log(scaleValueCheck, " this is scalevaluecheck")
-    Body.scale(car.bodies[0].parts[1],  scaleSize,  scaleSize);
-    Body.scale(car.bodies[1].parts[1],  scaleSize,  scaleSize);
-    Body.scale(car.bodies[0].parts[2],  scaleSize,  scaleSize);
-    Body.scale(car.bodies[1].parts[2],  scaleSize,  scaleSize);
-    Body.scale(car.bodies[0].parts[3],  scaleSize,  scaleSize);
-    Body.scale(car.bodies[1].parts[3],  scaleSize,  scaleSize);
-    Body.scale(car.bodies[0].parts[4],  scaleSize,  scaleSize);
-    Body.scale(car.bodies[1].parts[4],  scaleSize,  scaleSize);
-    Body.scale(car.bodies[0].parts[5],  scaleSize,  scaleSize);
-    Body.scale(car.bodies[1].parts[5],  scaleSize,  scaleSize);
-    Body.scale(car.bodies[0].parts[6],  scaleSize,  scaleSize);
-    Body.scale(car.bodies[1].parts[6],  scaleSize,  scaleSize);
-    
-    
-  }
-  if(scaleValue > scaleValueCheck && car.bodies[0].parts[1].circleRadius <= 64){
-    console.log("increase");
-    console.log(scaleValue, "this is scalevalue");
-    console.log(scaleValueCheck, " this is scalevaluecheck")
-    scaleSize = 1-((scaleValue *-2/wheelRadius));
-    console.log(scaleSize);
-    Body.scale(car.bodies[0].parts[1],  scaleSize,  scaleSize);
-    Body.scale(car.bodies[1].parts[1],  scaleSize,  scaleSize);
-    Body.scale(car.bodies[0].parts[2],  scaleSize,  scaleSize);
-    Body.scale(car.bodies[1].parts[2],  scaleSize,  scaleSize);
-    Body.scale(car.bodies[0].parts[3],  scaleSize,  scaleSize);
-    Body.scale(car.bodies[1].parts[3],  scaleSize,  scaleSize);
-    Body.scale(car.bodies[0].parts[4],  scaleSize,  scaleSize);
-    Body.scale(car.bodies[1].parts[4],  scaleSize,  scaleSize);
-    Body.scale(car.bodies[0].parts[5],  scaleSize,  scaleSize);
-    Body.scale(car.bodies[1].parts[5],  scaleSize,  scaleSize);
-    Body.scale(car.bodies[0].parts[6],  scaleSize,  scaleSize);
-    Body.scale(car.bodies[1].parts[6],  scaleSize,  scaleSize); 
-  }
+//scale down 
+window.addEventListener('keydown', function (e) {
+    if (e.keyCode === 65){
+      if(car.bodies[0].parts[1].circleRadius >= 16){
+        scale.value --
+        Body.scale(car.bodies[0].parts[1],  .9375,  .9375);
+        Body.scale(car.bodies[1].parts[1],  .9375,  .9375);
+        Body.scale(car.bodies[0].parts[2],  .9375,  .9375);
+        Body.scale(car.bodies[1].parts[2],  .9375,  .9375);
+        Body.scale(car.bodies[0].parts[3],  .9375,  .9375);
+        Body.scale(car.bodies[1].parts[3],  .9375,  .9375);
+        Body.scale(car.bodies[0].parts[4],  .9375,  .9375);
+        Body.scale(car.bodies[1].parts[4],  .9375,  .9375);
+        Body.scale(car.bodies[0].parts[5],  .9375,  .9375);
+        Body.scale(car.bodies[1].parts[5],  .9375,  .9375);
+        Body.scale(car.bodies[0].parts[6],  .9375,  .9375);
+        Body.scale(car.bodies[1].parts[6],  .9375,  .9375);
+        if(constraint.length >= 45){
+          constraint.length = constraint.length - (constraint.length*.0625)
+        };
 
-    
-    scaleValueCheck = scaleValue;
-  
+        for (var legIdx = 2; legIdx < wheelBodyLeft.length; legIdx++) {
+          var leg = wheelBodyLeft[legIdx]; 
+          var legr = wheelBodyRight[legIdx];     
+          // Distance between base and leg
+          //vSub subtracting two vectors from each other
+          //vMag returns the length of the vector
+          var extension = vMag(vSub(wheelBaseLeft.position, leg.position));
+          var extension = vMag(vSub(wheelBaseRight.position, legr.position));
+          console.log(extension)
+          
+          if (extension > car.bodies[0].parts[1].circleRadius /1.3) {
+              //is not matching up with length of slider
+              
+              extend.value--
+              legExtensions[legIdx - 2] = -legExtensionMax;
+              var baseAngle = wheelLeft.angle - (-leg.angle);
+              var baseAngler = wheelRight.angle - (-legr.angle);
+              var legOutRotated = vRot({x: legExtensions[legIdx - 2], y: 0}, baseAngle);
+              var legOutRotatedr = vRot({x: legExtensions[legIdx - 2], y: 0}, baseAngler);
+              Matter.Body.translate(leg, legOutRotated);
+              Matter.Body.translate(legr, legOutRotatedr);
+          } 
+      } 
+      }
+      
+    }
+  })
+
+
+//scale up
+window.addEventListener('keydown', function (e) {
+  if (e.keyCode === 83){
+    if(car.bodies[0].parts[1].circleRadius <= 64){
+      scale.value ++
+      Body.scale(car.bodies[0].parts[1],  1.0625,  1.0625);
+      Body.scale(car.bodies[1].parts[1],  1.0625,  1.0625);
+      Body.scale(car.bodies[0].parts[2],  1.0625,  1.0625);
+      Body.scale(car.bodies[1].parts[2],  1.0625,  1.0625);
+      Body.scale(car.bodies[0].parts[3],  1.0625,  1.0625);
+      Body.scale(car.bodies[1].parts[3],  1.0625,  1.0625);
+      Body.scale(car.bodies[0].parts[4],  1.0625,  1.0625);
+      Body.scale(car.bodies[1].parts[4],  1.0625,  1.0625);
+      Body.scale(car.bodies[0].parts[5],  1.0625,  1.0625);
+      Body.scale(car.bodies[1].parts[5],  1.0625,  1.0625);
+      Body.scale(car.bodies[0].parts[6],  1.0625,  1.0625);
+      Body.scale(car.bodies[1].parts[6],  1.0625,  1.0625);
+      if(constraint.length <= 195){
+        constraint.length = constraint.length + (constraint.length*.0625)
+      };
+      for (var legIdx = 2; legIdx < wheelBodyLeft.length; legIdx++) {
+        var leg = wheelBodyLeft[legIdx]; 
+        var legr = wheelBodyRight[legIdx];     
+        // Distance between base and leg
+        //vSub subtracting two vectors from each other
+        //vMag returns the length of the vector
+        var extension = vMag(vSub(wheelBaseLeft.position, leg.position));
+        var extension = vMag(vSub(wheelBaseRight.position, legr.position));
+        console.log(extension)
+        
+        if (extension > car.bodies[0].parts[1].circleRadius /1.3) {
+            //is not matching up with length of slider
+            
+            extend.value--
+            legExtensions[legIdx - 2] = -legExtensionMax;
+            var baseAngle = wheelLeft.angle - (-leg.angle);
+            var baseAngler = wheelRight.angle - (-legr.angle);
+            var legOutRotated = vRot({x: legExtensions[legIdx - 2], y: 0}, baseAngle);
+            var legOutRotatedr = vRot({x: legExtensions[legIdx - 2], y: 0}, baseAngler);
+            Matter.Body.translate(leg, legOutRotated);
+            Matter.Body.translate(legr, legOutRotatedr);
+        } 
+    } 
+
+    }
+  }
 })
-
-//var scale = document.getElementById("scale");
-//scale.addEventListener('click', function(){
-  //Body.scale(car.bodies[0].parts[1], 1.05, 1.05);
-  //Body.scale(car.bodies[1].parts[1], 1.05, 1.05);
-  //constraint.length = constraint.length + (constraint.length*.025);
-  ///Body.scale(car.bodies[0].parts[2], 1.05, 1.05);
-  /*.scale(car.bodies[1].parts[2], 1.05, 1.05);
-  Body.scale(car.bodies[0].parts[3], 1.05, 1.05);
-  Body.scale(car.bodies[1].parts[3], 1.05, 1.05);
-  Body.scale(car.bodies[0].parts[4], 1.05, 1.05);
-  Body.scale(car.bodies[1].parts[4], 1.05, 1.05);
-  Body.scale(car.bodies[0].parts[5], 1.05, 1.05);
-  Body.scale(car.bodies[1].parts[5], 1.05, 1.05);
-  Body.scale(car.bodies[0].parts[6], 1.05, 1.05);
-  Body.scale(car.bodies[1].parts[6], 1.05, 1.05);
-  Body.scale(car.bodies[0].parts[7], 1.05, 1.05);
-  Body.scale(car.bodies[1].parts[7], 1.05, 1.05);
-  Body.scale(car.bodies[0].parts[8], 1.05, 1.05);
-  Body.scale(car.bodies[1].parts[8], 1.05, 1.05);
-});*/
-
-
-
-
 
 vSub = Matter.Vector.sub;
 vMag = Matter.Vector.magnitude;
@@ -356,20 +385,25 @@ var wheelSpeedMax = 0.065,
     wheelSpeed = wheelSpeedMax,
     legExtensionMax = 0.3,
     legExtensions = Array.from({ length: legCount }, (v, i) => legExtensionMax);
+var extend = document.getElementById("extendWheels");
 
 //Down arrow key for retracting legs back into wheels    
 window.addEventListener('keydown', function (e) {
-      if (e.keyCode === 40){
+      if (e.keyCode === 40){        
         for (var legIdx = 2; legIdx < wheelBodyLeft.length; legIdx++) {
           var leg = wheelBodyLeft[legIdx]; 
-          var legr = wheelBodyRight[legIdx];     
+          var legr = wheelBodyRight[legIdx]; 
+
           // Distance between base and leg
           //vSub subtracting two vectors from each other
           //vMag returns the length of the vector
           var extension = vMag(vSub(wheelBaseLeft.position, leg.position));
           var extension = vMag(vSub(wheelBaseRight.position, legr.position));
           
-          if (extension > wheelRadius /2.5) {
+          if (extension > car.bodies[0].parts[1].circleRadius /2.5) {
+
+              //is not matching up with length of slider
+              extend.value--
               legExtensions[legIdx - 2] = -legExtensionMax;
               var baseAngle = wheelLeft.angle - (-leg.angle);
               var baseAngler = wheelRight.angle - (-legr.angle);
@@ -393,93 +427,31 @@ window.addEventListener('keydown', function (e) {
       // Take a look at this later: https://gist.github.com/fabienjuif/a7d9fc3e34e23f6000bcfc185dc0e341
       }});
 
-//click extend wheels
-/*var extend = document.getElementById("extend");
-extend.addEventListener('click', function(){
-  for (var legIdx = 2; legIdx < wheelBodyLeft.length; legIdx++) {
-    var leg = wheelBodyLeft[legIdx]; 
-    var legr = wheelBodyRight[legIdx];     
-    // Distance between base and leg
-    //vSub subtracting two vectors from each other
-    //vMag returns the length of the vector
-    var extension = vMag(vSub(wheelBaseLeft.position, leg.position));
-    var extension = vMag(vSub(wheelBaseRight.position, legr.position));
-    
-    if (extension < wheelRadius / 1.3) {
-      legExtensions[legIdx - 2] = legExtensionMax;
-      var baseAngle = wheelLeft.angle - (-leg.angle);
-      var baseAngler = wheelRight.angle - (-legr.angle);
-      var legOutRotated = vRot({x: legExtensions[legIdx - 2], y: 0}, baseAngle);
-      var legOutRotatedr = vRot({x: legExtensions[legIdx - 2], y: 0}, baseAngler);
-      Matter.Body.translate(leg, legOutRotated);
-      Matter.Body.translate(legr, legOutRotatedr);
-  }
-    // I'm not sure why the negative angle is needed below.
-    // It has something to do with how matterjs represents angles internally.
-    // They seemed to be left handed
-
-    //Notes on Matter.Body.translate(body, translation)
-    //Moves a body by a given vector relative to its current position, 
-    //without imparting any velocity
-}
-
-
-// Take a look at this later: https://gist.github.com/fabienjuif/a7d9fc3e34e23f6000bcfc185dc0e341
-})*/
-
-
-//click to retract wheels
-/*var retract = document.getElementById("retract");
-retract.addEventListener('click', function(){
-  for (var legIdx = 2; legIdx < wheelBodyLeft.length; legIdx++) {
-    var leg = wheelBodyLeft[legIdx]; 
-    var legr = wheelBodyRight[legIdx];     
-    // Distance between base and leg
-    //vSub subtracting two vectors from each other
-    //vMag returns the length of the vector
-    var extension = vMag(vSub(wheelBaseLeft.position, leg.position));
-    var extension = vMag(vSub(wheelBaseRight.position, legr.position));
-    
-    if (extension > wheelRadius /2.5) {
-        legExtensions[legIdx - 2] = -legExtensionMax;
-        var baseAngle = wheelLeft.angle - (-leg.angle);
-        var baseAngler = wheelRight.angle - (-legr.angle);
-        var legOutRotated = vRot({x: legExtensions[legIdx - 2], y: 0}, baseAngle);
-        var legOutRotatedr = vRot({x: legExtensions[legIdx - 2], y: 0}, baseAngler);
-        Matter.Body.translate(leg, legOutRotated);
-        Matter.Body.translate(legr, legOutRotatedr);
-    } 
-    // I'm not sure why the negative angle is needed below.
-    // It has something to do with how matterjs represents angles internally.
-    // They seemed to be left handed
-    
-
-    //Notes on Matter.Body.translate(body, translation)
-    //Moves a body by a given vector relative to its current position, 
-    //without imparting any velocity
-}
-
-
-// Take a look at this later: https://gist.github.com/fabienjuif/a7d9fc3e34e23f6000bcfc185dc0e341
-})*/
 
 //wheel origin will always be (0,0) in wheel frame but use world frame
 //arrow key up press down to extend legs outside of wheels
+var count = 0;
 window.addEventListener('keydown', function (e) {
   if (e.keyCode === 38){
     for (var legIdx = 2; legIdx < wheelBodyLeft.length; legIdx++) {
+      
       var leg = wheelBodyLeft[legIdx]; 
-      var legr = wheelBodyRight[legIdx];     
+      var legr = wheelBodyRight[legIdx]; 
+
       // Distance between base and leg
       //vSub subtracting two vectors from each other
       //vMag returns the length of the vector
       var extension = vMag(vSub(wheelBaseLeft.position, leg.position));
       var extension = vMag(vSub(wheelBaseRight.position, legr.position))
-      if (extension < wheelRadius / 1.3) {
+      
+      if (extension < car.bodies[0].parts[1].circleRadius/ 1.3) {
+        //is not matching up with length of slider
+        extend.value++;
         legExtensions[legIdx - 2] = legExtensionMax;
         var baseAngle = wheelLeft.angle - (-leg.angle);
         var baseAngler = wheelRight.angle - (-legr.angle);
         var legOutRotated = vRot({x: legExtensions[legIdx - 2], y: 0}, baseAngle);
+
         var legOutRotatedr = vRot({x: legExtensions[legIdx - 2], y: 0}, baseAngler);
         Matter.Body.translate(leg, legOutRotated);
         Matter.Body.translate(legr, legOutRotatedr);
