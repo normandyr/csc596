@@ -89,9 +89,9 @@ console.log(car)
  var vertexSets = [];
 //getting SVG coords to use in game and load to screen
 for (var i = 0; i < 1; i += 1) {
- 
+  //$.get('/svg/' + svgs[i] + '.svg').done(function(data)
   (function(i) {
-      $.get('/svg/' + svgs[i] + '.svg').done(function(data) {
+      $.get(svgs[i] + '.svg').done(function(data) {
         
               //var color = Common.choose(['#556270', '#4ECDC4', '#C7F464', '#FF6B6B', '#C44D58']);
 
