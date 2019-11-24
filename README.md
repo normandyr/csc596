@@ -1,5 +1,5 @@
 ---
-permalink: /index.html
+
 ---
 There is an issue with Github pages deployment at the moment not loading the svg file though sometimes it will load but will take around <=10 mins or even more.  Recommend to download entire repo and run for now.
 
